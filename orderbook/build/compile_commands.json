@@ -1,0 +1,38 @@
+[
+{
+  "directory": "/Users/khuongle/Documents/orderbook/build",
+  "command": "/usr/bin/clang++ -I/Users/khuongle/Documents/orderbook/include -I/Users/khuongle/Documents/orderbook/tests -I/Users/khuongle/Documents/orderbook/reference -g -std=gnu++20 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/test_engine_ref.dir/tests/test_engine.cpp.o -c /Users/khuongle/Documents/orderbook/tests/test_engine.cpp",
+  "file": "/Users/khuongle/Documents/orderbook/tests/test_engine.cpp",
+  "output": "/Users/khuongle/Documents/orderbook/build/CMakeFiles/test_engine_ref.dir/tests/test_engine.cpp.o"
+},
+{
+  "directory": "/Users/khuongle/Documents/orderbook/build",
+  "command": "/usr/bin/clang++ -I/Users/khuongle/Documents/orderbook/include -I/Users/khuongle/Documents/orderbook/tests -I/Users/khuongle/Documents/orderbook/skeleton -g -std=gnu++20 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/test_engine_skel.dir/tests/test_engine.cpp.o -c /Users/khuongle/Documents/orderbook/tests/test_engine.cpp",
+  "file": "/Users/khuongle/Documents/orderbook/tests/test_engine.cpp",
+  "output": "/Users/khuongle/Documents/orderbook/build/CMakeFiles/test_engine_skel.dir/tests/test_engine.cpp.o"
+},
+{
+  "directory": "/Users/khuongle/Documents/orderbook/build",
+  "command": "/usr/bin/clang++ -I/Users/khuongle/Documents/orderbook/include -I/Users/khuongle/Documents/orderbook/tests -I/Users/khuongle/Documents/orderbook/reference -g -std=gnu++20 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/test_engine_m2.dir/tests/test_engine_m2.cpp.o -c /Users/khuongle/Documents/orderbook/tests/test_engine_m2.cpp",
+  "file": "/Users/khuongle/Documents/orderbook/tests/test_engine_m2.cpp",
+  "output": "/Users/khuongle/Documents/orderbook/build/CMakeFiles/test_engine_m2.dir/tests/test_engine_m2.cpp.o"
+},
+{
+  "directory": "/Users/khuongle/Documents/orderbook/build",
+  "command": "/usr/bin/clang++ -I/Users/khuongle/Documents/orderbook/include -I/Users/khuongle/Documents/orderbook/tests -I/Users/khuongle/Documents/orderbook/reference -g -std=gnu++20 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/test_spsc.dir/tests/test_spsc.cpp.o -c /Users/khuongle/Documents/orderbook/tests/test_spsc.cpp",
+  "file": "/Users/khuongle/Documents/orderbook/tests/test_spsc.cpp",
+  "output": "/Users/khuongle/Documents/orderbook/build/CMakeFiles/test_spsc.dir/tests/test_spsc.cpp.o"
+},
+{
+  "directory": "/Users/khuongle/Documents/orderbook/build",
+  "command": "/usr/bin/clang++ -I/Users/khuongle/Documents/orderbook/include -I/Users/khuongle/Documents/orderbook/tests -I/Users/khuongle/Documents/orderbook/reference -g -std=gnu++20 -arch arm64 -Wall -Wextra -Wpedantic -O2 -DNDEBUG -o CMakeFiles/benchmark.dir/bench/benchmark.cpp.o -c /Users/khuongle/Documents/orderbook/bench/benchmark.cpp",
+  "file": "/Users/khuongle/Documents/orderbook/bench/benchmark.cpp",
+  "output": "/Users/khuongle/Documents/orderbook/build/CMakeFiles/benchmark.dir/bench/benchmark.cpp.o"
+},
+{
+  "directory": "/Users/khuongle/Documents/orderbook/build",
+  "command": "/usr/bin/clang++ -I/Users/khuongle/Documents/orderbook/include -I/Users/khuongle/Documents/orderbook/tests -I/Users/khuongle/Documents/orderbook/reference -g -std=gnu++20 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/cli.dir/tools/cli.cpp.o -c /Users/khuongle/Documents/orderbook/tools/cli.cpp",
+  "file": "/Users/khuongle/Documents/orderbook/tools/cli.cpp",
+  "output": "/Users/khuongle/Documents/orderbook/build/CMakeFiles/cli.dir/tools/cli.cpp.o"
+}
+]

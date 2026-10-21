@@ -1,0 +1,60 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "debug",
+      "displayName": "Debug + ASan/UBSan",
+      "description": "Catches leaks, use-after-free, unaligned loads, and signed UB",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "QUANT_ENABLE_ASAN_UBSAN": "ON",
+        "QUANT_ENABLE_TSAN": "OFF"
+      }
+    },
+    {
+      "name": "tsan",
+      "displayName": "RelWithDebInfo + ThreadSanitizer",
+      "description": "Catches data races, lock-order inversions, and weak atomic bugs",
+      "binaryDir": "${sourceDir}/build/tsan",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "QUANT_ENABLE_ASAN_UBSAN": "OFF",
+        "QUANT_ENABLE_TSAN": "ON"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release (-O3 Benchmark Mode)",
+      "description": "Full optimizations for false sharing, SPSC, AoS/SoA, and Monte Carlo",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "QUANT_ENABLE_ASAN_UBSAN": "OFF",
+        "QUANT_ENABLE_TSAN": "OFF"
+      }
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "tsan",
+      "configurePreset": "tsan",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "release",
+      "configurePreset": "release",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}

@@ -24,7 +24,6 @@ else()
         -Wextra
         -Werror
         -Wpedantic
-        -Wno-interference-size
         -fno-omit-frame-pointer
     )
 endif()

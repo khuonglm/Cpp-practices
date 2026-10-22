@@ -1,5 +1,6 @@
 CXX      ?= g++
-CXXFLAGS := -std=c++20 -Wall -Wextra -Werror -Wpedantic -Wno-interference-size -pthread -Icommon -Itasks
+.DEFAULT_GOAL := run
+CXXFLAGS := -std=c++20 -Wall -Wextra -Werror -Wpedantic -pthread -Icommon -Itasks
 
 SAN ?= none
 ifeq ($(SAN),asan)

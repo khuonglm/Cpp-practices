@@ -46,6 +46,7 @@ public:
     void* alloc(size_t size, size_t align = alignof(std::max_align_t)) {
         (void)size;
         (void)align;
+        (void)base_;
         throw std::logic_error("TODO: Arena::alloc");
     }
 

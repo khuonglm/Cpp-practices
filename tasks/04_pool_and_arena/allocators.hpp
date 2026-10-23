@@ -5,28 +5,57 @@
 #include <new>
 #include <stdexcept>
 #include <utility>
+#include <vector>
+#include <memory>
 
-template <typename T, size_t N>
+template <typename T, std::size_t N>
 class ObjectPool {
     static_assert(N > 0, "Pool capacity N must be > 0");
 
 public:
-    ObjectPool() = default;
-    ObjectPool(const ObjectPool&) = delete;
-    ObjectPool& operator=(const ObjectPool&) = delete;
+    ObjectPool(): slots_{std::vector<Slot>(N)}, free_{nullptr} {
+        free_ = &slots_[0];
+        for(std::size_t i = 0; i < N - 1; ++i) {
+            slots_[i].nextFree = &slots_[i + 1];
+        }
+        slots_[N - 1].nextFree = nullptr;
+    }
+    ObjectPool(const ObjectPool<T,N>&) = delete;
+    ObjectPool& operator=(const ObjectPool<T,N>&) = delete;
+    ObjectPool(ObjectPool<T,N>&&) = delete;
+    ObjectPool& operator=(ObjectPool<T,N>&&) = delete;
+    ~ObjectPool() {
+        // caller must deallocate/destroy everything before
+    }
 
-    T* allocate() {
-        throw std::logic_error("TODO: ObjectPool::allocate");
+    T* allocate() noexcept {
+        if(free_ == nullptr)
+            return nullptr;
+        Slot* slot = free_;
+        free_ = free_->nextFree;
+        return reinterpret_cast<T*>(&slot->storage);
     }
 
     void deallocate(T* p) noexcept {
-        (void)p;
+        if(p == nullptr)
+            return;
+        Slot* slot = reinterpret_cast<Slot*>(p);
+        slot->nextFree = free_;
+        free_ = slot;
     }
 
     template <typename... Args>
     T* construct(Args&&... args) {
-        (void)sizeof...(args);
-        throw std::logic_error("TODO: ObjectPool::construct");
+        T* object = allocate();
+        if(object == nullptr)
+            return nullptr;
+        
+        try{
+            return std::construct_at(object, std::forward<Args>(args)...);
+        } catch (...) {
+            deallocate(object);
+            throw;
+        }
     }
 
     void destroy(T* p) noexcept {
@@ -35,6 +64,17 @@ public:
             deallocate(p);
         }
     }
+private:
+    union Slot {
+        // ensure that the address is suitable for accessing a T
+        alignas(T) unsigned char storage[sizeof(T)];
+        Slot* nextFree;
+
+        Slot() noexcept : nextFree(nullptr) {}
+        ~Slot() noexcept {}
+    };
+    std::vector<Slot> slots_;
+    Slot* free_;
 };
 
 class Arena {
@@ -44,18 +84,24 @@ public:
     Arena& operator=(const Arena&) = delete;
 
     void* alloc(size_t size, size_t align = alignof(std::max_align_t)) {
-        (void)size;
-        (void)align;
-        (void)base_;
-        throw std::logic_error("TODO: Arena::alloc");
+        if(align == 0 || (align & (align - 1)))
+            return nullptr;
+        
+        std::uintptr_t cur = reinterpret_cast<uintptr_t>(base_) + off_;
+        std::uintptr_t curPadding = (cur + align - 1) & (~(align - 1));
+        std::uintptr_t padding = curPadding - cur;
+        if(cap_ - off_ < padding || cap_ - off_ - padding < size)
+            return nullptr;
+        off_ += padding + size;
+        return reinterpret_cast<void*>(curPadding);
     }
 
     void reset() noexcept { off_ = 0; }
-    size_t used() const noexcept { return off_; }
-    size_t capacity() const noexcept { return cap_; }
+    std::size_t used() const noexcept { return off_; }
+    std::size_t capacity() const noexcept { return cap_; }
 
 private:
     uint8_t* base_;
-    size_t   cap_;
-    size_t   off_ = 0;
+    std::size_t cap_;
+    std::size_t off_ = 0;
 };

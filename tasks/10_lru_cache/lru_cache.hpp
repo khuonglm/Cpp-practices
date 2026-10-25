@@ -26,7 +26,7 @@ public:
     LruCache& operator=(const LruCache&) = delete;
 
     std::optional<V> get(const K& key) {
-        std::lock_guard lk(m_);
+        std::lock_guard<std::mutex> lk(m_);
         auto it = data_.find(key);
         if(it == data_.end())
             return std::nullopt;
@@ -35,7 +35,7 @@ public:
     }
 
     void put(const K& key, V value) {
-        std::lock_guard lk(m_);
+        std::lock_guard<std::mutex> lk(m_);
         auto [it, inserted] = data_.try_emplace(key, value);
         if(!inserted) it->second = value;
         touch_(key);
